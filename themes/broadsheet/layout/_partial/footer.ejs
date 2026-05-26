@@ -1,0 +1,57 @@
+<%
+const siteName = (config.title && config.title !== 'Hexo') ? config.title : (theme.brand_title || 'Broadsheet');
+%>
+
+<footer class="border-t border-white bg-black text-white">
+  <div class="mx-auto w-full px-4 py-10 sm:px-6 lg:px-10 xl:px-12">
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.8fr)_minmax(18rem,0.7fr)] lg:items-start">
+      <div>
+        <h2 class="mt-4 font-serif text-3xl sm:text-4xl" style="font-family: 'Manufacturing Consent', Georgia, serif;"><%= siteName %></h2>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-white/76">
+          <%= theme.footer_note %>
+        </p>
+      </div>
+
+      <div>
+        <div class="mt-4 grid gap-3 text-left">
+          <a href="#" class="text-sm font-sans tracking-[0.22em] text-white/76 transition-colors hover:text-white">Terms of Service</a>
+          <a href="#" class="text-sm font-sans tracking-[0.22em] text-white/76 transition-colors hover:text-white">About Us</a>
+          <a href="#" class="text-sm font-sans tracking-[0.22em] text-white/76 transition-colors hover:text-white">Contact Us</a>
+          <a href="#" class="text-sm font-sans tracking-[0.22em] text-white/76 transition-colors hover:text-white">Privacy Policy</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="mt-2 flex items-center gap-3">
+          <a href="#" class="inline-flex h-9 w-9 items-center justify-center text-white/76 transition-colors hover:border-white hover:text-white" aria-label="X">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+              <path d="M14.2 10.2 22.6 0h-2l-7.3 8.8L7.5 0H.8l8.8 13L.8 24h2l7.7-9.3 6.2 9.3h6.7l-9.2-13.8Zm-2.7 3.2-.9-1.3L3.5 1.5h3.1l5.7 8.4.9 1.3 7.5 11.2h-3.1l-6.1-9Z"/>
+            </svg>
+          </a>
+          <a href="#" class="inline-flex h-9 w-9 items-center justify-center text-white/76 transition-colors hover:border-white hover:text-white" aria-label="Instagram">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="#" class="inline-flex h-9 w-9 items-center justify-center text-white/76 transition-colors hover:border-white hover:text-white" aria-label="GitHub">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+              <path fill-rule="evenodd" d="M12 .5A12 12 0 0 0 8.2 23.9c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+        </div>
+
+        <form class="mt-4 grid gap-3" action="#" onsubmit="return false;">
+          <label for="footer-newsletter-email" class="sr-only">Email address</label>
+          <input id="footer-newsletter-email" type="email" placeholder="Email address" class="border border-white/40 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/50 outline-none transition-colors focus:border-white">
+          <button type="submit" class="border cursor-pointer bg-white px-4 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-8 border-t border-white pt-4 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-white/62">
+      <span>&copy; <%= new Date().getFullYear() %> <%= siteName %></span>
+    </div>
+  </div>
+</footer>

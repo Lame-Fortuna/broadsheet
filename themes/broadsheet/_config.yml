@@ -1,0 +1,55 @@
+menu:
+  Home: /
+  Archives: /archives/
+
+favicon: /favicon.ico
+
+brand_title: Broadsheet
+edition_label: Independent Journal
+deck: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+fallback_images: []
+
+hero:
+  heading: Lorem ipsum dolor sit
+  deck: Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+  slides:
+    - eyebrow: City Desk
+      title: Two Wheels Over Four
+      subtitle: Many cities today are plagued by traffic congestion and, in densely populated areas, the fastest way of getting around is often on a bicycle.
+      link: /2026/05/23/two-wheels-over-four/
+      image: /images/elephant car.jpeg
+    - eyebrow: Music
+      title: A New Era of Music Is Here
+      subtitle: That magic horn that pours forth music, jazz, lectures, market reports and educational talks.
+      link: /2026/05/26/a-new-era-of-music-is-here/
+      image: /images/monkey piano.jpg
+    - eyebrow: Architecture
+      title: Three Buildings
+      subtitle: A short architecture demo with sourced notes, one wide image, and two split-image sections.
+      link: /2026/05/22/three-building-styles-in-concrete-and-stone/
+      image: /images/ussr-donut.jpg
+
+author_card:
+  kicker: About This Journal
+  title: Demo for a blog site.
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  link_label: Browse the archive
+  link: /archives/
+
+sidebar:
+  note_title: Why it feels different
+  note_body: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis.
+  recent_posts_limit: 5
+
+home:
+  lead_label: Lead Story
+  latest_label: Latest Articles
+  snippets_limit: 6
+
+seo:
+  description: A demo Hexo blog theme with editorial layouts, image-led posts, and basic placeholder copy.
+  keywords: hexo theme, demo blog, editorial layout, placeholder content
+  default_og_image: /images/ussr-donut.jpg
+
+footer_note: Lorem ipsum dolor sit amet, consectetur adipiscing elit.

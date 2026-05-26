@@ -1,0 +1,33 @@
+<%
+let schema;
+
+if (is_post()) {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: page.title,
+    description: metaDescription,
+    datePublished: page.date ? page.date.toISOString() : undefined,
+    dateModified: page.updated ? page.updated.toISOString() : (page.date ? page.date.toISOString() : undefined),
+    author: {
+      '@type': 'Person',
+      name: config.author || siteName
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteName
+    },
+    mainEntityOfPage: canonicalUrl,
+    image: absoluteImage || undefined
+  };
+} else {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': is_home() ? 'Blog' : 'CollectionPage',
+    name: siteName,
+    description: metaDescription,
+    url: canonicalUrl
+  };
+}
+%>
+<script type="application/ld+json"><%- JSON.stringify(schema) %></script>

@@ -1,0 +1,86 @@
+<%
+const siteName = (config.title && config.title !== 'Hexo') ? config.title : (theme.brand_title || 'Broadsheet');
+let pageTitle = page.title || '';
+
+if (is_archive()) {
+  pageTitle = 'Archive';
+} else if (is_category()) {
+  pageTitle = page.category;
+} else if (is_tag()) {
+  pageTitle = page.tag;
+}
+
+const finalTitle = pageTitle ? `${pageTitle} | ${siteName}` : siteName;
+const fallbackDescription = (theme.seo && theme.seo.description) || theme.deck || 'An editorial Hexo blog.';
+const metaDescription = page.description || (is_post() ? editorial_summary(page, 190) : '') || config.description || fallbackDescription;
+const keywords = Array.isArray(config.keywords)
+  ? config.keywords.join(', ')
+  : (config.keywords || (theme.seo && theme.seo.keywords) || '');
+const canonicalPath = (page.path ? url_for(page.path) : url_for('/')).replace(/index\.html$/, '') || '/';
+const siteUrl = config.url ? config.url.replace(/\/$/, '') : '';
+const canonicalUrl = siteUrl ? `${siteUrl}${canonicalPath}` : canonicalPath;
+const fallbackImage = (theme.seo && theme.seo.default_og_image) || ((theme.hero && theme.hero.slides && theme.hero.slides[0]) ? theme.hero.slides[0].image : '');
+const pageImage = is_post() ? editorial_cover(page) : fallbackImage;
+const absoluteImage = pageImage
+  ? (pageImage.startsWith('http') ? pageImage : `${siteUrl}${pageImage}`)
+  : '';
+%>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% if (config.meta_generator) { %>
+    <meta name="generator" content="Hexo">
+  <% } %>
+  <title><%= finalTitle %></title>
+  <% if (keywords) { %>
+    <meta name="keywords" content="<%= keywords %>">
+  <% } %>
+  <meta name="author" content="<%= config.author || siteName %>">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manufacturing+Consent&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="description" content="<%= metaDescription %>">
+  <% if (theme.favicon) { %>
+    <%- favicon_tag(theme.favicon) %>
+  <% } %>
+  <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+  <meta property="og:title" content="<%= finalTitle %>">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:site_name" content="<%= siteName %>">
+  <meta property="og:description" content="<%= metaDescription %>">
+  <% if (absoluteImage) { %>
+    <meta property="og:image" content="<%= absoluteImage %>">
+  <% } %>
+  <% if (is_post() && page.date) { %>
+    <meta property="article:published_time" content="<%= page.date.toISOString() %>">
+  <% } %>
+  <% if (is_post() && page.updated) { %>
+    <meta property="article:modified_time" content="<%= page.updated.toISOString() %>">
+  <% } %>
+  <meta name="twitter:card" content="<%= absoluteImage ? 'summary_large_image' : 'summary' %>">
+  <meta name="twitter:title" content="<%= finalTitle %>">
+  <meta name="twitter:description" content="<%= metaDescription %>">
+  <% if (absoluteImage) { %>
+    <meta name="twitter:image" content="<%= absoluteImage %>">
+  <% } %>
+  <% if (theme.twitter) { %>
+    <meta name="twitter:site" content="<%= theme.twitter %>">
+  <% } %>
+  <% if (config.feed) { %>
+    <%- feed_tag() %>
+  <% } else if (theme.rss) { %>
+    <%- feed_tag(theme.rss) %>
+  <% } %>
+  <%- partial('_partial/seo-json-ld', {
+    siteName: siteName,
+    canonicalUrl: canonicalUrl,
+    metaDescription: metaDescription,
+    absoluteImage: absoluteImage
+  }) %>
+  <%- css('css/generated.css') %>
+</head>

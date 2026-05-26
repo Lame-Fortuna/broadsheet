@@ -1,0 +1,18 @@
+<section class="mt-8 space-y-8">
+  <article class="overflow-hidden px-4 sm:px-6 lg:px-10 xl:px-12">
+    <div class="border-b border-black px-6 py-6 sm:px-8 xl:px-10">
+      <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">Page</p>
+      <h1 class="mt-4 font-serif text-4xl md:text-6xl leading-[0.9]"><%= page.title %></h1>
+    </div>
+
+    <div class="<%= editorial_body_class(page) %> px-6 py-8 sm:px-8 xl:px-10">
+      <%- editorial_render_body(page) %>
+    </div>
+  </article>
+
+  <div class="xl:grid xl:grid-cols-3">
+    <div class="xl:col-span-3">
+      <%- partial('_partial/sidebar', { current: 'page' }) %>
+    </div>
+  </div>
+</section>

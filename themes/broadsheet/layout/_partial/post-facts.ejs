@@ -1,0 +1,53 @@
+<%
+const currentTags = postTags || [];
+const currentCategories = categoryList || [];
+const sectionName = currentCategories.length ? currentCategories[0].name : 'General';
+%>
+
+<div class="border-t border-black px-6 py-6 sm:px-8 xl:px-10">
+  <div class="py-2">
+    <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">At A Glance</p>
+    <dl class="mt-4 grid gap-x-8 gap-y-4 text-sm leading-6 md:grid-cols-2 xl:grid-cols-3">
+      <div class="border-t border-black pt-3">
+        <dt class="font-semibold uppercase tracking-[0.18em]">Published</dt>
+        <dd class="mt-1"><%= date(page.date, 'DD MMM YYYY') %></dd>
+      </div>
+      <div class="border-t border-black pt-3">
+        <dt class="font-semibold uppercase tracking-[0.18em]">Section</dt>
+        <dd class="mt-1">
+          <a href="<%= url_for(currentCategories[0].path) %>" class="capitalize transition-colors hover:text-blue-700">
+            <%= sectionName %>
+          </a>
+        </dd>
+      </div>
+      <div class="border-t border-black pt-3">
+        <dt class="font-semibold uppercase tracking-[0.18em]">Tags</dt>
+        <dd class="mt-1">
+          <% if (currentTags.length) { %>
+            <div class="flex flex-wrap gap-x-3 gap-y-2">
+              <% currentTags.forEach(function(tag) { %>
+                <a href="<%= url_for(tag.path) %>" class="capitalize transition-colors hover:text-blue-700">#<%= tag.name %></a>
+              <% }) %>
+            </div>
+          <% } else { %>
+            None
+          <% } %>
+        </dd>
+      </div>
+      <div class="border-t border-black pt-3">
+        <dt class="font-semibold uppercase tracking-[0.18em]">Author</dt>
+        <dd class="mt-1 capitalize"><%= config.author || theme.brand_title || 'Editorial Desk' %></dd>
+      </div>
+      <% if (page.updated) { %>
+        <div class="border-t border-black pt-3">
+          <dt class="font-semibold uppercase tracking-[0.18em]">Updated</dt>
+          <dd class="mt-1"><%= date(page.updated, 'DD MMM YYYY') %></dd>
+        </div>
+      <% } %>
+      <div class="border-t border-black pt-3">
+        <dt class="font-semibold uppercase tracking-[0.18em]">Pattern</dt>
+        <dd class="mt-1"><%= editorial_pattern_label(page) %></dd>
+      </div>
+    </dl>
+  </div>
+</div>

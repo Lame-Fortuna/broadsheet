@@ -1,0 +1,33 @@
+<%
+const cover = editorial_cover(post);
+%>
+
+<article class="group border-b border-black/50 story-card flex flex-col overflow-hidden">
+  <% if (cover) { %>
+    <a href="<%= url_for(post.path) %>" class="m-4 block overflow-hidden border border-black">
+      <div class="aspect-4/3 overflow-hidden">
+        <img
+          src="<%= url_for(cover) %>"
+          alt="<%= post.title %>"
+          class="h-full w-full object-cover"
+        >
+      </div>
+    </a>
+  <% } %>
+
+  <div class="flex flex-1 flex-col gap-4 p-5">
+    <%- partial('_partial/article-meta', { post: post }) %>
+    <h3 class="font-serif text-[1.8rem] leading-tight">
+      <a href="<%= url_for(post.path) %>" class="transition-colors hover:text-blue-700"><%= post.title %></a>
+    </h3>
+    <p class="text-base leading-7 text-black/78">
+      <%= editorial_summary(post, compact ? 150 : 185) %>
+    </p>
+    <div class="mt-auto pt-2">
+      <a
+        href="<%= url_for(post.path) %>"
+        class="inline-flex border border-black px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] hover:text-white hover:bg-black transition-colors"
+      >Read article</a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,45 @@
+<%
+const archivePosts = page.posts ? page.posts.toArray() : [];
+let archiveTitle = 'Archive';
+let archiveIntro = 'Every article in chronological order.';
+
+if (is_category()) {
+  archiveTitle = page.category;
+  archiveIntro = 'Stories gathered under a single section.';
+} else if (is_tag()) {
+  archiveTitle = `#${page.tag}`;
+  archiveIntro = 'Posts grouped by tag.';
+} else if (is_year()) {
+  archiveTitle = `${page.year}`;
+  archiveIntro = 'A yearly archive of published writing.';
+} else if (is_month()) {
+  archiveTitle = `${page.year}/${page.month}`;
+  archiveIntro = 'A monthly archive of published writing.';
+}
+%>
+
+<section class="mt-8 space-y-8">
+  <div class="px-4 sm:px-6 lg:px-10 xl:px-12">
+    <div class="p-6 sm:p-8">
+      <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">Archive Desk</p>
+      <h1 class="mt-4 font-serif text-4xl md:text-6xl leading-[0.9]"><%= archiveTitle %></h1>
+      <p class="mt-4 max-w-3xl text-base leading-7 text-black/78 sm:text-lg">
+        <%= archiveIntro %>
+      </p>
+    </div>
+
+    <div class="story-stack mt-6">
+      <% archivePosts.forEach(function(post) { %>
+        <%- partial('_partial/post-card', { post: post, compact: true }) %>
+      <% }) %>
+    </div>
+
+    <%- partial('_partial/pagination') %>
+  </div>
+
+  <div class="xl:grid xl:grid-cols-3">
+    <div class="xl:col-span-3">
+      <%- partial('_partial/sidebar', { current: 'archive' }) %>
+    </div>
+  </div>
+</section>

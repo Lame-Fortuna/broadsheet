@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="<%= Array.isArray(config.language) ? config.language[0] : (config.language || 'en') %>">
+<%- partial('_partial/head') %>
+<body class="text-black antialiased">
+  <div class="site-shell min-h-screen">
+    <%- partial('_partial/header', null, { cache: !config.relative_link }) %>
+    <main class="mx-[1.5vw] pb-20">
+      <%- body %>
+    </main>
+    <%- partial('_partial/footer', null, { cache: !config.relative_link }) %>
+  </div>
+  <%- js('js/flowbite.min.js') %>
+  <%- js('js/app.js') %>
+</body>
+</html>

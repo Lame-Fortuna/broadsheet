@@ -1,0 +1,46 @@
+<%
+const postTags = page.tags && page.tags.length ? page.tags.toArray() : [];
+const categoryList = page.categories && page.categories.length ? page.categories.toArray() : [];
+const patternLabel = editorial_pattern_label(page);
+%>
+
+<section class="mt-8 space-y-8">
+  <article class="overflow-hidden px-4 sm:px-6 lg:px-10 xl:px-12">
+    <div class="border-b border-black px-6 py-6 sm:px-8 xl:px-10">
+      <div class="grid gap-8 xl:grid-cols-[minmax(0,1.8fr)_minmax(18rem,0.95fr)] xl:items-start">
+        <div>
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">Article</p>
+          <h1 class="mt-4 font-serif text-4xl md:text-5xl leading-[0.9]"><%= page.title %></h1>
+          <div class="mt-5">
+            <%- partial('_partial/article-meta', { post: page }) %>
+          </div>
+          <% if (page.description) { %>
+            <div class="mt-6 max-w-4xl text-base leading-8 text-black/80 sm:text-lg">
+              <p><%= page.description %></p>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="bg-black text-paper p-6">
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">Pattern</p>
+          <p class="mt-4 font-serif text-3xl text-white leading-tight"><%= patternLabel %></p>
+          <p class="mt-4 text-sm leading-7">
+            This post uses a fixed layout pattern so structure stays intentional instead of drifting back into a generic blog format.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="<%= editorial_body_class(page) %> px-6 py-8 sm:px-8 xl:px-10">
+      <%- editorial_render_body(page) %>
+    </div>
+
+    <%- partial('_partial/post-facts', { page: page, postTags: postTags, categoryList: categoryList }) %>
+  </article>
+
+  <div class="xl:grid xl:grid-cols-3">
+    <div class="xl:col-span-3">
+      <%- partial('_partial/sidebar', { current: 'post' }) %>
+    </div>
+  </div>
+</section>

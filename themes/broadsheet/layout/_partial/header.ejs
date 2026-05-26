@@ -1,0 +1,140 @@
+<%
+// Updated fallbacks to reflect a theme demo
+const siteName = (config.title && config.title !== 'Hexo') ? config.title : (theme.brand_title || 'The Broadsheet Theme');
+const deck = config.description || theme.deck || 'A classic, editorial-style web theme designed for modern storytellers, visual blogs, and art collages.';
+const menuEntries = Object.entries(theme.menu || {});
+const searchPosts = site.posts
+  ? site.posts.sort('date', -1).toArray().map(function(post) {
+      return {
+        title: post.title || 'Untitled',
+        url: url_for(post.path),
+        summary: editorial_summary(post, 90)
+      };
+    })
+  : [];
+
+
+// Keep the formatted date for the newspaper dateline
+const today = new Date();
+const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formattedDate = today.toLocaleDateString('en-US', dateOptions);
+%>
+
+<header class="mb-8">
+  <div class="mx-[1.5vw] border-b-2 border-black">
+    <div class="flex flex-col pt-6">
+
+      <!-- Navbar -->
+      <div class="site-navbar fixed left-[1.5vw] right-[1.5vw] top-0 z-50 flex flex-nowrap items-center justify-between gap-2 border-b-2 border-black px-3 py-2 sm:gap-4 sm:px-4">
+        <div class="flex min-w-0 shrink flex-nowrap items-center gap-x-3 gap-y-2 sm:gap-x-5">
+          <% if (menuEntries.length) { %>
+            <nav class="flex flex-nowrap items-center gap-x-3 gap-y-2 sm:gap-x-4" aria-label="Primary">
+              <% menuEntries.forEach(function(entry) { const label = entry[0]; const target = entry[1]; %>
+                <a href="<%= url_for(target) %>" class="text-xs font-bold uppercase tracking-widest text-black hover:underline decoration-2 underline-offset-4"><%= label %></a>
+              <% }) %>
+            </nav>
+          <% } %>
+        </div>
+
+        <div class="flex shrink-0 items-center gap-3">
+          <form class="group/search relative flex h-9 w-9 shrink-0 items-center justify-end overflow-visible transition-[width] duration-200 ease-out focus-within:w-[min(12rem,46vw)] hover:w-[min(12rem,46vw)] sm:focus-within:w-[min(18rem,72vw)] sm:hover:w-[min(18rem,72vw)]" data-site-search>
+            <label for="site-search" class="sr-only">Search posts</label>
+            <input
+              id="site-search"
+              type="search"
+              name="q"
+              autocomplete="off"
+              placeholder="Search"
+              class="h-9 w-full border-0 bg-transparent py-2 pl-9 pr-3 text-sm text-black opacity-0 outline-none ring-0 transition-opacity placeholder:text-black/50 focus:border-0 focus:outline-none focus:ring-0 group-focus-within/search:opacity-100 group-hover/search:opacity-100"
+              data-site-search-input
+            >
+            <span class="pointer-events-none absolute bottom-1 left-9 right-3 h-px bg-black opacity-0 transition-opacity group-focus-within/search:opacity-100 group-hover/search:opacity-100" aria-hidden="true"></span>
+            <button type="submit" class="absolute left-0 top-0 flex h-9 w-9 items-center justify-center text-black transition-colors hover:bg-black hover:text-paper" aria-label="Search">
+              <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <div class="absolute right-0 top-full z-50 mt-2 hidden w-[min(16rem,88vw)] border-2 border-black/50 bg-stone-100 text-black shadow-sm sm:w-[min(18rem,72vw)]" data-site-search-results></div>
+          </form>
+          <p class="hidden text-xs font-bold uppercase tracking-widest text-black sm:block">
+            <%= formattedDate %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="mt-10 overflow-visible text-center sm:mt-12">
+        <a href="<%= url_for('/') %>" class="inline-block">
+          <span class="block break-words text-6xl md:text-7xl lg:text-8xl leading-[0.9] text-black" style="font-family: 'Manufacturing Consent', Georgia, serif;">
+            <%= siteName %>
+          </span>
+        </a>
+      </div>
+
+      <!-- Description Banner -->
+      <div class="py-2">
+        <p class="text-center text-sm uppercase tracking-[0.25em] text-black/80 max-w-5xl mx-auto leading-relaxed">
+          <%= deck %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const posts = <%- JSON.stringify(searchPosts) %>;
+      const form = document.querySelector('[data-site-search]');
+      if (!form) return;
+
+      const input = form.querySelector('[data-site-search-input]');
+      const results = form.querySelector('[data-site-search-results]');
+
+      const closeResults = () => {
+        results.classList.add('hidden');
+        results.innerHTML = '';
+      };
+
+      const renderResults = () => {
+        const query = input.value.trim().toLowerCase();
+        if (!query) {
+          closeResults();
+          return;
+        }
+
+        const matches = posts
+          .filter((post) => `${post.title} ${post.summary}`.toLowerCase().includes(query))
+          .slice(0, 5);
+
+        if (!matches.length) {
+          results.innerHTML = '<p class="px-3 py-2 text-xs font-bold uppercase tracking-widest text-black/60">No matches</p>';
+          results.classList.remove('hidden');
+          return;
+        }
+
+        results.innerHTML = matches.map((post) => `
+          <a href="${post.url}" class="block border-b border-black px-3 py-2 last:border-b-0 hover:bg-black hover:text-paper">
+            <span class="block text-sm font-bold leading-snug">${post.title}</span>
+            <span class="mt-1 block text-xs leading-5 opacity-75">${post.summary}</span>
+          </a>
+        `).join('');
+        results.classList.remove('hidden');
+      };
+
+      input.addEventListener('input', renderResults);
+      document.addEventListener('click', (event) => {
+        if (!form.contains(event.target)) closeResults();
+      });
+      form.addEventListener('submit', (event) => {
+        const firstMatch = results.querySelector('a');
+        if (!input.value.trim()) {
+          event.preventDefault();
+          input.focus();
+        } else if (firstMatch) {
+          event.preventDefault();
+          window.location.href = firstMatch.href;
+        }
+      });
+    })();
+  </script>
+</header>

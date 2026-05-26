@@ -1,0 +1,14 @@
+<%
+const categoryList = post.categories && post.categories.length ? post.categories.toArray() : [];
+const tagList = post.tags && post.tags.length ? post.tags.toArray() : [];
+%>
+
+<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-black/62">
+  <span><%= date(post.date, 'DD MMM YYYY') %></span>
+  <span><%= config.author || theme.brand_title || 'Editorial Desk' %></span>
+  <% if (categoryList.length) { %>
+    <span><%= categoryList[0].name %></span>
+  <% } else if (tagList.length) { %>
+    <span><%= tagList[0].name %></span>
+  <% } %>
+</div>

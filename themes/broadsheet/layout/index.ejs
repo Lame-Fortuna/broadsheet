@@ -1,0 +1,300 @@
+<%
+const posts = page.posts ? page.posts.toArray() : site.posts.sort('date', -1).toArray();
+const currentIndexPage = Number(page.current || 1);
+const isFirstIndexPage = currentIndexPage === 1;
+const featuredPost = isFirstIndexPage && posts.length ? (posts.find(post => post.featured) || posts[0]) : null;
+const latestPosts = isFirstIndexPage
+  ? posts.slice(0, theme.home.snippets_limit || 6)
+  : [];
+const listPosts = isFirstIndexPage ? latestPosts : posts;
+const heroSlides = (theme.hero && theme.hero.slides) ? theme.hero.slides : [];
+const postCount = site.posts ? site.posts.length : posts.length;
+const categoryCount = site.categories ? site.categories.length : 0;
+const tagCount = site.tags ? site.tags.length : 0;
+%>
+
+<% if (isFirstIndexPage) { %>
+<section class="px-4 sm:px-6 lg:px-10 xl:px-12">
+  <div class="space-y-6">
+    <div class="mb-12 h-fit">
+
+      <div id="top-story-carousel" class="group relative" data-carousel="static">
+        <div class="relative min-h-[470px] overflow-hidden sm:min-h-[520px] lg:min-h-[450px]">
+
+          <% heroSlides.forEach(function(slide, index) { %>
+            <div class="<%= index === 0 ? '' : 'hidden ' %>duration-0 ease-linear h-full" data-carousel-item>
+
+              <div class="flex h-full flex-col px-8 sm:px-12 lg:px-16">
+                <!-- Title -->
+                <div class="pb-2">
+                  <a href="<%= slide.link ? url_for(slide.link) : '#' %>" class="block text-black transition-colors hover:text-blue-700">
+                    <h2 class="line-clamp-2 h-[3.7rem] overflow-hidden font-serif text-3xl font-bold leading-[0.96] tracking-[-0.03em] md:h-auto md:text-4xl">
+                      <%= slide.title.length > 45
+                        ? `${slide.title.slice(0, 45)}...`
+                        : slide.title %>
+                    </h2>
+                  </a>
+                </div>
+
+                <!-- Content -->
+                <div class="grid min-h-0 gap-3 py-3 lg:flex-1 lg:grid-cols-[minmax(13rem,0.60fr)_minmax(0,0.40fr)] lg:gap-6 lg:py-5">
+                  <!-- Image -->
+                  <a
+                    href="<%= slide.link ? url_for(slide.link) : '#' %>"
+                    class="block h-[180px] border border-black overflow-hidden transition-colors hover:text-blue-700 sm:h-[240px] lg:h-full lg:min-h-[280px]"
+                  >
+                    <img
+                      src="<%= url_for(slide.image) %>"
+                      alt="<%= slide.title %>"
+                      class="h-full w-full object-cover object-top"
+                    >
+                  </a>
+
+                  <!-- Text -->
+                  <div class="flex min-h-0 flex-col">
+                    <hr class="mb-2 border-black sm:mb-4">
+                    <p class="text-[13px] font-bold uppercase tracking-[0.14em] text-black sm:text-[15px]">
+                      <%= slide.eyebrow %>
+                    </p>
+                    <hr class="my-2 border-black sm:my-4">
+
+                    <p class="line-clamp-3 font-serif text-sm leading-5 text-black/85 sm:line-clamp-4 sm:leading-6 md:text-[20px] lg:line-clamp-none">
+                      <%= slide.subtitle.length > 450
+                        ? `${slide.subtitle.slice(0, 450)}...`
+                        : slide.subtitle %>
+                    </p>
+
+                    <a
+                      href="<%= slide.link ? url_for(slide.link) : '#' %>"
+                      class="mt-3 inline-flex shrink-0 text-[11px] font-bold uppercase tracking-[0.16em] text-black transition-colors hover:text-blue-700 hover:underline sm:mt-4"
+                    >
+                      Read more →
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+
+        <% if (heroSlides.length > 1) { %>
+          <button type="button" class="absolute left-0 top-0 z-30 flex h-full w-8 cursor-pointer items-center justify-center transition-colors hover:bg-black hover:text-paper sm:w-10 lg:w-12" data-carousel-prev>
+            <span class="font-serif text-5xl font-light leading-none" aria-hidden="true">&#8249;</span>
+            <span class="sr-only">Previous slide</span>
+          </button>
+          <button type="button" class="absolute right-0 top-0 z-30 flex h-full w-8 cursor-pointer items-center justify-center transition-colors hover:bg-black hover:text-paper sm:w-10 lg:w-12" data-carousel-next>
+            <span class="font-serif text-5xl font-light leading-none" aria-hidden="true">&#8250;</span>
+            <span class="sr-only">Next slide</span>
+          </button>
+        <% } %>
+
+        <!-- Bottom Pagination Bar -->
+        <% if (heroSlides.length > 1) { %>
+          <div class="relative z-20 px-5 py-4 sm:px-6">
+            <div class="flex items-center justify-center gap-3">
+              <% heroSlides.forEach(function(slide, index) { %>
+                <button
+                  type="button"
+                  class=" cursor-pointer h-1.5 w-12 border border-black transition-colors <%= index === 0 ? 'bg-black' : 'bg-transparent hover:bg-black/20' %>"
+                  aria-current="<%= index === 0 ? 'true' : 'false' %>"
+                  aria-label="Slide <%= index + 1 %>"
+                  data-carousel-slide-to="<%= index %>"
+                ></button>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="grid gap-6 border-y-2 py-4 border-black/50 xl:grid-cols-[minmax(0,1.7fr)_24rem]">
+      <div class="bg-white px-5 py-5 sm:px-6 sm:py-6">
+        <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]"><%= theme.edition_label || 'Featured' %></p>
+        <h1 class="mt-3 font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.94]"><%= (theme.hero && theme.hero.heading) || config.title || theme.brand_title %></h1>
+        <div class="home-flow-copy overflow-hidden mt-4 text-base leading-7 text-black/78 sm:text-lg">
+          <p><%= (theme.hero && theme.hero.deck) || config.description || theme.deck %></p>
+          <p class="m-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+        </div>
+      </div>
+
+      <aside class="hidden space-y-6 md:block">
+        <div class="bg-black p-6 text-paper">
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em] text-paper/80"><%= theme.author_card.kicker %></p>
+          <h2 class="font-serif text-3xl leading-tight"><%= theme.author_card.title %></h2>
+          <p class="mt-4 text-sm leading-7 text-paper/85">
+            <%= theme.author_card.description %>
+          </p>
+          <% if (theme.author_card.link && theme.author_card.link_label) { %>
+            <a
+              href="<%= url_for(theme.author_card.link) %>"
+              class="mt-6 inline-flex border border-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] hover:text-black hover:bg-white transition-colors"
+            ><%= theme.author_card.link_label %></a>
+          <% } %>
+        </div>
+
+        <div class="bg-white p-6">
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">At A Glance</p>
+          <div class="mt-5 grid grid-cols-3 gap-3 text-center">
+            <div class="border border-black p-4">
+              <p class="font-serif text-3xl"><%= postCount %></p>
+              <p class="mt-2 text-[0.68rem] uppercase tracking-[0.24em] text-black/70">Posts</p>
+            </div>
+            <div class="border border-black p-4">
+              <p class="font-serif text-3xl"><%= categoryCount %></p>
+              <p class="mt-2 text-[0.68rem] uppercase tracking-[0.24em] text-black/70">Sections</p>
+            </div>
+            <div class="border border-black p-4">
+              <p class="font-serif text-3xl"><%= tagCount %></p>
+              <p class="mt-2 text-[0.68rem] uppercase tracking-[0.24em] text-black/70">Tags</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="mt-10 space-y-10">
+  
+  <% if (isFirstIndexPage) { %>
+  <div class="grid gap-8 border-b border-black/40 px-4 pb-8 sm:grid-cols-2 sm:px-6 lg:px-10 xl:grid-cols-[minmax(0,1.5fr)_26rem] xl:items-stretch xl:px-12">
+    <!-- Featured Story -->
+    <% if (featuredPost) { %>
+      <article class="pr-4 sm:border-r-2 border-black/50  group flex h-full flex-col overflow-hidden">
+        <div class="grid h-full xl:grid-cols-[1.1fr_0.9fr]">
+          <!-- Image -->
+          <a
+            href="<%= url_for(featuredPost.path) %>"
+            class="block overflow-hidden border border-black transition-colors hover:text-blue-700 xl:border-r"
+          >
+            <div class="h-full min-h-80 xl:min-h-full overflow-hidden">
+              <img
+                src="<%= url_for(editorial_cover(featuredPost)) %>"
+                alt="<%= featuredPost.title %>"
+                class="h-full w-full object-cover"
+              >
+            </div>
+          </a>
+
+          <!-- Content -->
+          <div class="flex h-full flex-col p-6 sm:p-8 xl:p-10">
+            <div>
+              <p class="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-black/65">
+                <%= theme.home.lead_label || 'Lead Story' %>
+              </p>
+              <div class="mt-4">
+                <%- partial('_partial/article-meta', { post: featuredPost }) %>
+              </div>
+
+              <h2 class="mt-5 font-serif text-3xl md:text-4xl leading-[0.95] tracking-[-0.03em]">
+                <a href="<%= url_for(featuredPost.path) %>" class="transition-colors hover:text-blue-700">
+                  <%= featuredPost.title %>
+                </a>
+              </h2>
+
+              <div class="home-lead-copy mt-6 text-[1.02rem] leading-8 text-black/75">
+                <p>
+                  <%= editorial_summary(featuredPost, 220) %>
+                </p>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="mt-10 pt-6 border-t border-black/15">
+              <a
+                href="<%= url_for(featuredPost.path) %>"
+                class="inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.24em] transition-colors hover:text-blue-700"
+              >
+                Read Full Piece
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </article>
+    <% } %>
+
+    <!-- Edition Notes -->
+    <div class="hidden sm:flex h-full flex-col justify-between space-y-6">
+      <div class="p-5">
+
+        <div class="flex items-center gap-4 border-b border-black pb-3">
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.18em]">
+            Edition Notes
+          </p>
+        </div>
+
+        <div class="mt-5 space-y-6">
+
+          <% latestPosts.slice(0, 3).forEach(function(post) { %>
+            <article class="border-b border-black/20 pb-5 last:border-b-0 last:pb-0">
+
+              <%- partial('_partial/article-meta', { post: post }) %>
+
+              <h3 class="mt-3 font-serif text-[1.55rem] leading-[1.02] tracking-[-0.02em]">
+                <a href="<%= url_for(post.path) %>" class="transition-colors hover:text-blue-700">
+                  <%= post.title %>
+                </a>
+              </h3>
+
+              <p class="mt-3 text-[0.98rem] leading-7 text-black/72 line-clamp-3">
+                <%= editorial_summary(post, 110) %>
+              </p>
+
+            </article>
+          <% }) %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } else { %>
+    <div class="border-b border-black/40 px-4 pb-7 sm:px-6 lg:px-10 xl:px-12">
+      <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]">Articles</p>
+      <h1 class="mt-3 font-serif text-4xl leading-[0.95] tracking-[-0.03em] md:text-6xl">
+        Page <%= currentIndexPage %>
+      </h1>
+      <p class="mt-4 max-w-3xl text-base leading-7 text-black/72">
+        A quieter index of older entries from the demo archive.
+      </p>
+    </div>
+  <% } %>
+
+  <!-- Article List -->
+  <div class="px-4 sm:px-6 lg:px-10 xl:px-12">
+    <div class="flex items-center gap-4 py-2">
+      <p class="text-[0.72rem] font-bold uppercase tracking-[0.15em]"><%= isFirstIndexPage ? (theme.home.latest_label || 'Latest Articles') : 'More Articles' %></p>
+    </div>
+
+    <% if (listPosts.length) { %>
+      <div class="story-stack mt-6">
+        <% listPosts.forEach(function(post) { %>
+          <%- partial('_partial/post-card', { post: post, compact: true }) %>
+        <% }) %>
+      </div>
+    <% } else if (!posts.length) { %>
+      <div class="mt-6 p-8">
+        <h2 class="font-serif text-3xl">No posts yet</h2>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-black/76">
+          Add a few posts in <code>source/_posts</code> and the homepage will automatically fill the featured rail and article snippets.
+        </p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Pagination -->
+  <div class="px-4 sm:px-6 lg:px-10 xl:px-12">
+    <%- partial('_partial/pagination') %>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="xl:grid xl:grid-cols-3">
+    <div class="xl:col-span-3">
+      <%- partial('_partial/sidebar', { current: 'home' }) %>
+    </div>
+  </div>
+
+</section>

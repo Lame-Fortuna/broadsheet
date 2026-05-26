@@ -1,0 +1,36 @@
+{
+  "name": "hexo-site",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build:css": "tailwindcss -i ./themes/broadsheet/source/css/app.css -o ./themes/broadsheet/source/css/generated.css --minify",
+    "build": "npm run build:css && hexo generate",
+    "clean": "hexo clean",
+    "deploy": "hexo deploy",
+    "server": "npm run build:css && hexo server",
+    "watch:css": "tailwindcss -i ./themes/broadsheet/source/css/app.css -o ./themes/broadsheet/source/css/generated.css --watch"
+  },
+  "hexo": {
+    "version": "8.1.1"
+  },
+  "dependencies": {
+    "hexo": "^8.0.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-marked": "^7.0.0",
+    "hexo-renderer-stylus": "^3.0.1",
+    "hexo-server": "^3.0.0",
+    "hexo-theme-landscape": "^1.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "autoprefixer": "^10.5.0",
+    "flowbite": "^4.0.1",
+    "postcss": "^8.5.12",
+    "tailwindcss": "^4.2.4"
+  }
+}
