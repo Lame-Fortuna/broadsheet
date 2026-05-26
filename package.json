@@ -31,6 +31,6 @@
     "autoprefixer": "^10.5.0",
     "flowbite": "^4.0.1",
     "postcss": "^8.5.12",
-    "tailwindcss": "^4.2.4"
+    "tailwindcss": "^4.3.0"
   }
 }
