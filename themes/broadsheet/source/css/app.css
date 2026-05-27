@@ -434,22 +434,37 @@
   }
 
   .pattern-listicle > * + * {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 
   .listicle-entry {
-    display: grid;
-    gap: 1rem;
-    break-inside: avoid-column;
+    display: block;
+    border-top: 1px solid color-mix(in oklab, var(--color-ink) 45%, transparent);
+    padding-top: 1.5rem;
+    break-inside: avoid;
+  }
+
+  .listicle-entry:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .listicle-entry > * + * {
+    margin-top: 1rem;
+  }
+
+  .listicle-entry > div > * + * {
+    margin-top: 0.9rem;
+  }
+
+  .listicle-poster {
+    margin-bottom: 1rem;
   }
 
   .listicle-poster img {
-    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
     object-fit: cover;
-  }
-
-  .listicle-side {
-    min-width: 0;
   }
 
   .listicle-rank {
@@ -461,9 +476,9 @@
   .listicle-entry h2,
   .listicle-entry h3 {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 0.92;
-    margin-top: 0.45rem;
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+    line-height: 1;
+    margin: 0;
   }
 
   .listicle-meta {
@@ -480,10 +495,6 @@
   .listicle-entry > div > p {
     font-size: 1.08rem;
     line-height: 1.9;
-  }
-
-  .listicle-entry > div > p + p {
-    margin-top: 0.9rem;
   }
 
   .pattern-guide-intro {
@@ -503,38 +514,23 @@
     line-height: 1.8;
   }
 
-  .pattern-guide .listicle-entry {
-    display: block;
-    border-top: 1px solid color-mix(in oklab, var(--color-ink) 45%, transparent);
-    padding-top: 2rem;
-  }
-
-  .pattern-guide .listicle-entry:first-child {
-    border-top: none;
-    padding-top: 0;
-  }
-
   .pattern-guide .pattern-guide-title {
-    display: flex;
-    align-items: flex-start;
-    gap: clamp(0.8rem, 2vw, 1.35rem);
+    display: block;
     font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 4.4vw, 3.85rem);
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
     font-weight: 500;
-    line-height: 0.9;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1;
+    line-height: 1;
     letter-spacing: 0;
-    margin: 0 0 0.35rem;
+    margin: 0;
+    text-transform: none;
   }
 
   .pattern-guide .pattern-guide-title span {
-    display: block;
-    flex: 0 0 auto;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: clamp(5.25rem, 12vw, 8.5rem);
-    font-style: italic;
-    font-weight: 400;
-    line-height: 0.78;
-    letter-spacing: 0;
+    display: inline;
+    font: inherit;
+    margin-right: 0.45rem;
   }
 
   .pattern-guide .pattern-guide-title + .listicle-meta {
@@ -558,7 +554,7 @@
   }
 
   .pattern-guide-summary {
-    border-top: 2px solid var(--color-ink);
+    border-top: 1px solid var(--color-ink);
     padding-top: 1.5rem;
   }
 
@@ -750,47 +746,11 @@
     height: 12rem;
   }
 
-  .listicle-entry {
-    grid-template-columns: 20rem minmax(0, 1fr);
-    align-items: start;
-  }
-
-  .listicle-entry:nth-of-type(even) {
-    grid-template-columns: minmax(0, 1fr) 20rem;
-  }
-
-  .listicle-entry:nth-of-type(even) .listicle-poster {
-    order: 2;
-  }
-
-  .listicle-entry:nth-of-type(even) > div {
-    order: 1;
-  }
-
-  .listicle-linear .listicle-entry,
-  .listicle-linear .listicle-entry:nth-of-type(even) {
-    grid-template-columns: 13rem minmax(0, 1fr);
-  }
-
-  .listicle-linear .listicle-entry:nth-of-type(even) .listicle-poster,
-  .listicle-linear .listicle-entry:nth-of-type(even) .listicle-side,
-  .listicle-linear .listicle-entry:nth-of-type(even) > div {
-    order: initial;
-  }
 }
 
 @media (max-width: 640px) {
   .article-body {
     font-size: 1.03rem;
     line-height: 1.8;
-  }
-
-  .pattern-guide .pattern-guide-title {
-    gap: 0.75rem;
-    font-size: 2rem;
-  }
-
-  .pattern-guide .pattern-guide-title span {
-    font-size: 4.15rem;
   }
 }

@@ -137,12 +137,29 @@ hero_image: /images/my-post.jpg
 Broadsheet supports five content patterns:
 
 - **article**: Multi-column layout for long-form content, with each section heading kept beside its first paragraph
-- **listicle**: For rankings and itemized lists
+- **listicle**: Vertical repeated sections for rankings, checklists, guides, and itemized posts
 - **roundup**: Card-based collections
 - **simple**: Standard blog posts with layout helpers
 - **freeform**: Plain Markdown (default)
 
 Choose the pattern that best fits your content structure.
+
+A listicle entry is just a vertical section. You can number the heading or leave it unnumbered, and the content stays in the order you write it:
+
+```html
+<section class="listicle-entry">
+  <div>
+    <h2>1. Item Title</h2>
+    <div class="listicle-meta">
+      <span>Optional detail</span>
+    </div>
+    <p>Entry text.</p>
+    <figure class="listicle-poster">
+      <img src="/images/example.jpg" alt="Example image">
+    </figure>
+  </div>
+</section>
+```
 
 ## Development Workflow
 

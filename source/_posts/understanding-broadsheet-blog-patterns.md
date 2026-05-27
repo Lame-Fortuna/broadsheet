@@ -23,7 +23,7 @@ npm run server
 <p>The new file appears in <code>source/_posts/</code>. Add <code>pattern: article</code>, <code>pattern: listicle</code>, <code>pattern: roundup</code>, <code>pattern: simple</code>, or <code>pattern: freeform</code> in front matter to choose the layout.</p>
 </section>
 
-<div class="pattern-guide listicle-linear">
+<div class="pattern-guide">
 <section class="listicle-entry">
 <div>
 <h2 class="pattern-guide-title"><span>1.</span> Article</h2>
@@ -77,42 +77,36 @@ More prose, with optional images or blockquotes.
 <span>Front matter: pattern: listicle</span>
 <span>Body class: pattern-listicle</span>
 </div>
-<p>The listicle pattern is for posts built from repeated entries. Each entry can have a rank, title, image, metadata row, and explanation. The default layout alternates image placement on wide screens to avoid a monotonous stack.</p>
-<p>For a simpler documentation-style listicle, wrap the entries in <code>listicle-linear</code>. That keeps every entry in the same direction and disables the alternating image pattern.</p>
+<p>The listicle pattern is for posts built from repeated vertical entries. Each entry is a separated section, and the content inside it stays in the order you write it.</p>
+<p>Use it like a list of freeform blocks: an entry can have a numbered title, an unnumbered title, metadata, images, code snippets, lists, or just paragraphs. The theme keeps each entry linear and does not force a special desktop layout.</p>
 <p class="pattern-guide-subhead">Use it when</p>
 <ul class="pattern-guide-list">
 <li>The article is naturally divided into items.</li>
 <li>Each item needs its own heading and explanation.</li>
 <li>You want a ranking, guide, checklist, comparison, or ordered collection.</li>
-<li>You want images beside entries, but not a masonry card layout.</li>
+<li>You want each item to have freedom without becoming a masonry card layout.</li>
 </ul>
-<p class="pattern-guide-subhead">Image-led entry</p>
+<p class="pattern-guide-subhead">Flexible entries</p>
 {% codeblock lang:html %}
-<section class="listicle-entry">
-  <figure class="listicle-poster">
-    <img src="/images/example.jpg" alt="Example image">
-  </figure>
-  <div>
-    <p class="listicle-rank">1. First Entry</p>
-    <h2>Entry Title</h2>
-    <div class="listicle-meta">
-      <span>Useful Detail</span>
-    </div>
-    <p>Entry description goes here.</p>
-  </div>
-</section>
-{% endcodeblock %}
-<p class="pattern-guide-subhead">Linear text-led entry</p>
-{% codeblock lang:html %}
-<div class="listicle-linear">
+<div class="pattern-guide">
   <section class="listicle-entry">
-    <aside class="listicle-side">
-      <p class="listicle-rank">1. Section</p>
-      <p>Short side note.</p>
-    </aside>
     <div>
-      <h2>Section Title</h2>
-      <p>Main explanation.</p>
+      <h2>1. Numbered Entry</h2>
+      <div class="listicle-meta">
+        <span>Optional detail</span>
+      </div>
+      <p>Entry description goes here.</p>
+      <figure class="listicle-poster">
+        <img src="/images/example.jpg" alt="Example image">
+      </figure>
+      <p>More notes can follow the image.</p>
+    </div>
+  </section>
+
+  <section class="listicle-entry">
+    <div>
+      <h2>Unnumbered Entry</h2>
+      <p>This entry has no rank and no image.</p>
     </div>
   </section>
 </div>

@@ -8,7 +8,7 @@ tags:
   - architecture
   - buildings
   - demo
-pattern: simple
+pattern: freeform
 featured: false
 hero_image: /images/ussr-donut.jpg
 ---

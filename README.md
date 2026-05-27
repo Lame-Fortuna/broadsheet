@@ -1,4 +1,4 @@
-# Broadsheet Hexo Theme Demo
+# Broadsheet Hexo Theme Demo ([Demo](https://broadsheet-blog.netlify.app/))
 
 This project is a demo Hexo site for the local custom theme named `broadsheet`.
 
@@ -16,7 +16,43 @@ The posts, author names, URLs, images, and sample copy are intentionally demo ma
 - `Node.js` 20+
 - `npm`
 
-## Install
+## Theme Installation
+
+To use `broadsheet` in another Hexo site:
+
+1. Copy or clone the theme into the target site's theme directory:
+
+```text
+themes/broadsheet/
+```
+
+2. Set the theme in the target site's root `_config.yml`:
+
+```yaml
+theme: broadsheet
+```
+
+3. Install the Hexo packages used by the theme:
+
+```bash
+npm install hexo-renderer-ejs hexo-renderer-marked hexo-generator-index hexo-generator-archive hexo-generator-category hexo-generator-tag
+```
+
+The theme ships with compiled CSS and the vendored carousel script:
+
+```text
+themes/broadsheet/source/css/generated.css
+themes/broadsheet/source/js/flowbite.min.js
+```
+
+If you want to edit `themes/broadsheet/source/css/app.css`, install the CSS tooling and rebuild the generated file:
+
+```bash
+npm install -D tailwindcss @tailwindcss/cli flowbite
+npm run build:css
+```
+
+## Demo Site Install
 
 ```bash
 npm install
@@ -198,30 +234,28 @@ More text.
 
 ### `listicle`
 
-Use for rankings or long item-by-item features.
+Use for rankings, checklists, guides, or long item-by-item features.
 
 Behavior:
 
-- each entry is authored as its own block
-- entries can include an image, metadata row, heading, and multiple paragraphs
-- entries alternate image position on large screens
+- each entry is a vertical section separated from the next
+- entries can include numbered or unnumbered headings
+- entries can include images, metadata rows, code snippets, lists, and paragraphs
+- content stays in the order you write it
 
 Recommended structure:
 
 ```html
 <section class="listicle-entry">
-  <figure class="listicle-poster">
-    <img src="/images/example.jpg" alt="Poster">
-  </figure>
   <div>
-    <p class="listicle-rank">1. Item Title</p>
-    <h2>Section Heading</h2>
+    <h2>1. Item Title</h2>
     <div class="listicle-meta">
-      <span>Director: Name</span>
-      <span>Writer: Name</span>
-      <span>Rating: 8.8/10</span>
+      <span>Optional detail</span>
     </div>
     <p>First paragraph.</p>
+    <figure class="listicle-poster">
+      <img src="/images/example.jpg" alt="Example image">
+    </figure>
     <p>Second paragraph.</p>
   </div>
 </section>
@@ -398,3 +432,13 @@ Before publishing:
 3. Replace sample posts and placeholder images as needed.
 4. Run `npm run clean`.
 5. Run `npm run build`.
+
+## Screenshots
+
+![Broadsheet homepage](./screenshots/broadsheet-blog.netlify.app.jpg)
+
+![Music article](./screenshots/broadsheet-blog.netlify.app_a-new-era-of-music-is-here_.jpg)
+
+![Insectes article](./screenshots/broadsheet-blog.netlify.app_emile-allain-seguy-insectes-plates_.jpg)
+
+![Two Wheels Over Four article](./screenshots/broadsheet-blog.netlify.app_two-wheels-over-four_.jpg)
