@@ -1,4 +1,4 @@
-# Broadsheet Hexo Theme Demo ([Demo](https://broadsheet-blog.netlify.app/))
+# Broadsheet Hexo Theme | [Demo](https://broadsheet-blog.netlify.app/)
 
 This project is a demo Hexo site for the local custom theme named `broadsheet`.
 
